@@ -8,7 +8,7 @@ type User = {
 
 const Table: FC<{data: User[]}> = ({data}) => {
   return (
-    <table>
+    <table cellSpacing={20} border={1}>
       <thead>
         <tr>
           <th>Username</th>
@@ -42,7 +42,6 @@ const App: FC = () => {
 
   return (
     <div className="h-screen flex flex-col justify-center items-center">
-      <h3 className="text-red-800">react-typescript-tailwind boilerplate!</h3>
       <Table data={data} />
     </div>
   );

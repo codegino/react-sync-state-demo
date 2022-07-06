@@ -34,3 +34,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+table,
+th,
+td {
+  border: 1px solid black;
+}
+
+table th,
+table td {
+  padding: 0rem 0.5rem;
+  text-align: left;
+}
