@@ -1,38 +1,10 @@
 import React, {FC, useEffect} from 'react';
-
-type User = {
-  name: string;
-  username: string;
-  website: string;
-};
-
-const Table: FC<{data: User[]}> = ({data}) => {
-  return (
-    <table cellSpacing={20} border={1}>
-      <thead>
-        <tr>
-          <th>Username</th>
-          <th>Name</th>
-          <th>website</th>
-        </tr>
-      </thead>
-      <tbody>
-        {data.map((item, index) => {
-          return (
-            <tr key={index}>
-              <td>{item.username}</td>
-              <td>{item.name}</td>
-              <td>{item.website}</td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
-  );
-};
+import {useSearchParams} from 'react-router-dom';
+import Table from './Table';
+import {User} from './user.model';
 
 const App: FC = () => {
-  const [data, setData] = React.useState([]);
+  const [data, setData] = React.useState<User[]>([]);
 
   useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/users')
@@ -40,9 +12,28 @@ const App: FC = () => {
       .then(json => setData(json));
   }, []);
 
+  const [searchParams] = useSearchParams();
+  const sortBy = searchParams.get('sortBy') || '';
+  const [sortProp, order] = sortBy ? sortBy.split(':') : [];
+
+  const sortedData = sortBy
+    ? [...data].sort((a, b) => {
+        const firstValue = a[sortProp as keyof User];
+        const secondValue = b[sortProp as keyof User];
+
+        if (!firstValue || !secondValue) {
+          return 0;
+        }
+
+        return order === 'desc'
+          ? secondValue.localeCompare(firstValue)
+          : firstValue.localeCompare(secondValue);
+      })
+    : data;
+
   return (
-    <div className="h-screen flex flex-col justify-center items-center">
-      <Table data={data} />
+    <div>
+      <Table data={sortedData} />
     </div>
   );
 };

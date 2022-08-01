@@ -35,6 +35,10 @@ code {
     monospace;
 }
 
+body {
+  padding: 1rem;
+}
+
 table,
 th,
 td {

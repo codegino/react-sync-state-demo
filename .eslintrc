@@ -4,7 +4,7 @@
     "es2021": true
   },
   "extends": [
-    "plugin:react/recommended",
+    // "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:react-hooks/recommended"
